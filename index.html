@@ -3,364 +3,532 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Memuat Undangan...</title>
+    <title>kuade.com - Jasa Undangan Pernikahan Digital Premium</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Dancing+Script:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&family=Great+Vibes&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- CSS Variabel -->
-    <style id="dynamic-theme">
-        :root {
-            --color-primary: #C5A059; --color-bg: #FAF7F2;
-            --font-head: "Playfair Display", serif; --font-title: "Great Vibes", cursive; --font-body: "Lato", sans-serif;
-        }
-    </style>
-
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
-                extend: { colors: { gold: 'var(--color-primary)', soft: 'var(--color-bg)', dark: '#2C2C2C' }, fontFamily: { head: ['var(--font-head)', 'serif'], title: ['var(--font-title)', 'cursive'], body: ['var(--font-body)', 'sans-serif'] } }
+                extend: {
+                    colors: {
+                        brand: '#FF416C',     /* Vibrant Pink/Coral */
+                        brand2: '#FF4B2B',    /* Bright Orange */
+                        dark: '#0F172A',      /* Slate 900 - Modern Dark */
+                        darker: '#020617',    /* Slate 950 */
+                        soft: '#FFFCF9',      /* Warm Off-White */
+                        gold: '#C5A059'       /* Kept for some accents */
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
             }
         }
     </script>
+
     <style>
-        body { background-color: var(--color-bg); overflow-x: hidden; }
-        .glass-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.8); box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.05); }
-        #opening-cover { transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1), opacity 1s ease; }
-        .cover-opened { transform: translateY(-100%); opacity: 0; pointer-events: none; }
-        .reveal-up { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
-        .reveal-active { opacity: 1; transform: translate(0, 0); }
-        .sakura-petal { position: fixed; top: -10%; z-index: 40; pointer-events: none; animation: fall linear infinite; }
-        @keyframes fall { 100% { transform: translate(calc(100vw * var(--drift)), 110vh) rotate(var(--rotation)); opacity: 0; } }
-        .floating-nav { transform: translateX(-50%) translateY(100px); transition: transform 0.5s ease; }
-        .nav-visible { transform: translateX(-50%) translateY(0); }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #FFFCF9; color: #0F172A; }
+        
+        /* Glassmorphism Navbar */
+        .glass-nav {
+            background: rgba(255, 252, 249, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Modern Gradient Text */
+        .text-gradient {
+            background: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Gradient Button with Glow */
+        .btn-gradient {
+            background: linear-gradient(135deg, #FF416C 0%, #FF4B2B 100%);
+            color: white;
+            box-shadow: 0 10px 25px -5px rgba(255, 65, 108, 0.4);
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 35px -5px rgba(255, 65, 108, 0.5);
+        }
+
+        /* Hover Card Effect */
+        .hover-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hover-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(255, 65, 108, 0.15); border-color: rgba(255, 65, 108, 0.2); }
+
+        /* Scroll Reveal Animations */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+        .reveal-active { opacity: 1; transform: translateY(0); }
+
+        /* Blob Animation */
+        .blob { animation: blob-bounce 7s infinite alternate cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes blob-bounce {
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            100% { transform: translate(30px, -30px) scale(1.1) rotate(10deg); }
+        }
+
+        /* WA Floating Button Animation */
+        .wa-bounce { animation: wa-bounce 2.5s infinite; }
+        @keyframes wa-bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-12px); }
+            60% { transform: translateY(-6px); }
+        }
     </style>
 </head>
-<body class="font-body text-dark antialiased bg-soft overflow-hidden" id="body">
+<body class="antialiased overflow-x-hidden">
 
-    <!-- LOADING SCREEN / LOCK SCREEN -->
-    <div id="loading-screen" class="fixed inset-0 z-[300] bg-white flex flex-col items-center justify-center transition-opacity duration-500">
-        <div class="animate-spin rounded-full h-14 w-14 border-t-2 border-b-2 border-gold mb-6" id="loading-spinner"></div>
-        <p class="font-head text-gold text-2xl tracking-widest text-center px-4" id="loading-text">Menyiapkan Undangan...</p>
-        <div id="lock-actions" class="hidden mt-8 text-center px-6">
-            <p class="text-sm text-gray-500 mb-4 font-body">Silakan hubungi admin untuk melakukan pelunasan dan mengaktifkan tautan undangan ini.</p>
-            <!-- Ganti dengan No WA Admin -->
-            <a href="https://wa.me/6281234567890?text=Halo%20Admin,%20saya%20mau%20konfirmasi%20pembayaran%20untuk%20mengaktifkan%20link%20undangan." class="inline-block px-8 py-3 bg-green-500 text-white rounded-full font-bold font-body hover:bg-green-600 transition-colors shadow-lg">
-                <i class="fab fa-whatsapp mr-2"></i> Konfirmasi Pembayaran
+    <!-- 1. NAVBAR (Sticky Menu) -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-sans font-extrabold tracking-tight text-dark flex items-center gap-2">
+                <i class="fas fa-heart text-brand text-xl"></i> kuade<span class="text-gradient">.com</span>
             </a>
-            <div class="mt-8 pt-6 border-t border-gray-100">
-                <a href="index.html" class="text-sm text-gray-400 hover:text-gold"><i class="fas fa-arrow-left mr-1"></i> Kembali ke kuade.com</a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8 font-semibold text-sm text-gray-600">
+                <a href="#beranda" class="hover:text-brand transition-colors">Beranda</a>
+                <a href="#fitur" class="hover:text-brand transition-colors">Fitur Premium</a>
+                <a href="#katalog" class="hover:text-brand transition-colors">Katalog Tema</a>
+                <a href="#harga" class="hover:text-brand transition-colors">Harga</a>
+                <a href="#cara-pesan" class="px-7 py-2.5 btn-gradient rounded-full font-bold tracking-wide">Pesan Sekarang</a>
             </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-2xl text-dark hover:text-brand transition-colors" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-    </div>
-
-    <audio id="bg-music" loop><source id="audio-source" src="" type="audio/mpeg"></audio>
-    <div id="yt-player-container" class="hidden"></div>
-
-    <!-- BOTTOM NAV -->
-    <nav id="bottom-nav" class="floating-nav fixed bottom-6 left-1/2 z-[150] bg-white/80 backdrop-blur-lg border border-gold/30 shadow-2xl rounded-full px-8 py-3 flex items-center gap-8 text-gray-400 text-xl font-body">
-        <a href="#hero" class="hover:text-gold"><i class="fas fa-home"></i></a>
-        <a href="#acara" class="hover:text-gold"><i class="fas fa-calendar-alt"></i></a>
-        <a href="#galeri" class="hover:text-gold hidden" id="nav-galeri"><i class="fas fa-images"></i></a>
-        <a href="#rsvp" class="hover:text-gold"><i class="fas fa-envelope-open-text"></i></a>
-        <button id="music-btn" class="text-gold animate-pulse"><i class="fas fa-music"></i></button>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full left-0 py-4 px-6 flex flex-col gap-4 shadow-2xl">
+            <a href="#beranda" class="font-semibold text-gray-700 hover:text-brand" onclick="toggleMenu()">Beranda</a>
+            <a href="#fitur" class="font-semibold text-gray-700 hover:text-brand" onclick="toggleMenu()">Fitur</a>
+            <a href="#katalog" class="font-semibold text-gray-700 hover:text-brand" onclick="toggleMenu()">Katalog Tema</a>
+            <a href="#harga" class="font-semibold text-gray-700 hover:text-brand" onclick="toggleMenu()">Harga</a>
+            <a href="#cara-pesan" class="text-center py-3 btn-gradient rounded-xl font-bold mt-2" onclick="toggleMenu()">Pesan Sekarang</a>
+        </div>
     </nav>
 
-    <!-- 1. COVER -->
-    <section id="opening-cover" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-dark">
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80')] bg-cover bg-center opacity-40"></div>
-        <div class="relative z-10 text-center text-white px-6">
-            <p class="font-body tracking-[0.3em] uppercase text-sm mb-4">The Wedding Of</p>
-            <h1 id="cover-names" class="font-title text-6xl md:text-8xl mb-6 text-gold">Mempelai</h1>
-            <p id="cover-date" class="font-head italic text-lg mb-10">Tanggal Acara</p>
-            <div class="glass-card p-6 rounded-2xl w-full mb-8 text-dark bg-white/80">
-                <p class="font-body text-sm mb-2 text-gray-600">Kepada Yth.</p>
-                <p id="nama-tamu" class="font-head font-bold text-2xl text-gold mb-2 border-b border-gold/20 pb-2">Tamu Undangan</p>
+    <!-- 2. HERO SECTION -->
+    <section id="beranda" class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-soft">
+        <!-- Dekorasi Background Ceria & Elegan -->
+        <div class="absolute top-20 right-0 w-[500px] h-[500px] bg-brand/10 rounded-full blur-[100px] blob"></div>
+        <div class="absolute bottom-10 left-0 w-[400px] h-[400px] bg-brand2/10 rounded-full blur-[100px] blob" style="animation-delay: 2s;"></div>
+        <div class="absolute top-1/2 left-1/4 w-[300px] h-[300px] bg-purple-400/10 rounded-full blur-[80px] blob" style="animation-delay: 4s;"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
+                <!-- Teks Hero -->
+                <div class="flex-1 text-center md:text-left reveal-up">
+                    <span class="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-brand/10 text-brand font-bold text-sm mb-6 border border-brand/20 shadow-sm">
+                        <i class="fas fa-sparkles"></i> Lebih dari sekadar undangan
+                    </span>
+                    <h1 class="font-sans text-5xl md:text-6xl lg:text-7xl font-extrabold text-dark leading-[1.1] mb-6 tracking-tight">
+                        Sebarkan Momen Bahagia dengan <br class="hidden lg:block"> <span class="text-gradient">Sangat Elegan.</span>
+                    </h1>
+                    <p class="text-gray-500 text-lg md:text-xl mb-10 max-w-lg mx-auto md:mx-0 leading-relaxed font-medium">
+                        Buat undangan pernikahan digital kelas premium yang modern, ceria, dan praktis. Langsung jadi tanpa ribet, siap memukau tamu Anda.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#katalog" class="px-8 py-4 btn-gradient rounded-full font-bold tracking-wide text-center flex items-center justify-center gap-2">
+                            Lihat Katalog Tema <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#cara-pesan" class="px-8 py-4 bg-white text-dark border border-gray-200 rounded-full font-bold tracking-wide hover:border-brand hover:text-brand transition-all text-center shadow-sm hover:shadow-md">
+                            Cara Pemesanan
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Gambar Hero (Mockup HP) -->
+                <div class="flex-1 relative reveal-up" style="transition-delay: 200ms;">
+                    <div class="relative w-full max-w-md mx-auto aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_-12px_rgba(255,65,108,0.25)] border-8 border-white transform md:rotate-3 hover:rotate-0 transition-transform duration-700">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Wedding App Mockup" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/20 to-transparent"></div>
+                        <div class="absolute bottom-8 left-8 right-8 text-white text-left">
+                            <p class="font-serif text-3xl font-bold mb-2">Romeo & Juliet</p>
+                            <p class="text-sm font-medium opacity-90 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-brand2"></span> 16 Agustus 2026
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Badge Melayang -->
+                    <div class="absolute -bottom-6 md:-left-10 left-4 bg-white p-4 rounded-2xl shadow-xl border border-gray-100 animate-bounce">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 text-white rounded-full flex items-center justify-center text-xl shadow-md">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div>
+                                <p class="font-extrabold text-dark text-sm">Proses Cepat</p>
+                                <p class="text-xs text-gray-500 font-medium">Otomatis Aktif</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button onclick="openInvitation()" id="btn-buka-undangan" class="hidden px-10 py-4 bg-gold text-white font-body font-bold rounded-full shadow-lg hover:scale-105 transition-all">Buka Undangan</button>
         </div>
     </section>
 
-    <!-- 2. KONTEN UTAMA -->
-    <main id="main-content" class="hidden-content pb-24">
-        <div id="sakura-container"></div>
+    <!-- 3. FITUR PREMIUM -->
+    <section id="fitur" class="py-24 bg-white relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-20 reveal-up">
+                <span class="text-brand font-bold tracking-widest text-sm uppercase mb-3 block">Mengapa Memilih Kami?</span>
+                <h2 class="font-sans text-4xl md:text-5xl font-extrabold text-dark mb-6 tracking-tight">Fitur Spesial <span class="text-gradient">kuade.com</span></h2>
+                <p class="text-gray-500 text-lg">Nikmati semua fitur eksklusif kelas atas yang dirancang untuk memberikan pengalaman digital terbaik bagi Anda dan tamu undangan.</p>
+            </div>
 
-        <!-- HERO & MEMPELAI -->
-        <section id="hero" class="py-20 bg-soft text-center">
-            <div class="container mx-auto px-6 max-w-4xl">
-                <p id="salam-pembuka" class="font-head text-2xl text-gold mb-6 italic reveal-up">Assalamualaikum Wr. Wb.</p>
-                <p id="ayat-kutipan" class="font-body text-sm text-gray-600 mb-12 reveal-up">Kutipan Suci</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Fitur 1 -->
+                <div class="hover-card bg-soft p-8 rounded-[2rem] border border-gray-100 reveal-up group">
+                    <div class="w-16 h-16 bg-white shadow-sm border border-gray-100 text-brand rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-br group-hover:from-brand group-hover:to-brand2 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-dark mb-3">5+ Pilihan Tema Modern</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed font-medium">Berbagai gaya desain mulai dari Elegan Klasik hingga Minimalis Modern yang ceria. Bebas pilih sesuai konsep acara Anda.</p>
+                </div>
+                <!-- Fitur 2 -->
+                <div class="hover-card bg-soft p-8 rounded-[2rem] border border-gray-100 reveal-up group" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 bg-white shadow-sm border border-gray-100 text-brand rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-br group-hover:from-brand group-hover:to-brand2 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-dark mb-3">Musik Latar Favorit</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed font-medium">Bebas pilih lagu romantis favorit Anda langsung dari YouTube untuk dijadikan backsound undangan digital.</p>
+                </div>
+                <!-- Fitur 3 -->
+                <div class="hover-card bg-soft p-8 rounded-[2rem] border border-gray-100 reveal-up group" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 bg-white shadow-sm border border-gray-100 text-brand rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-br group-hover:from-brand group-hover:to-brand2 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-dark mb-3">Amplop Digital Pintar</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed font-medium">Permudah tamu memberikan kado digital atau transfer langsung ke rekening Anda dengan fitur sekali klik (Copy-Paste).</p>
+                </div>
+                <!-- Fitur 4 -->
+                <div class="hover-card bg-soft p-8 rounded-[2rem] border border-gray-100 reveal-up group">
+                    <div class="w-16 h-16 bg-white shadow-sm border border-gray-100 text-brand rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-br group-hover:from-brand group-hover:to-brand2 group-hover:text-white transition-colors duration-300">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-dark mb-3">RSVP Otomatis WhatsApp</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed font-medium">Dapatkan notifikasi konfirmasi kehadiran tamu (RSVP) beserta ucapan doa restu langsung ke nomor WhatsApp Anda.</p>
+                </div>
+                <!-- Fitur 5 -->
+                <div class="hover-card bg-soft p-8 rounded-[2rem] border border-gray-100 reveal-up group" style="transition-delay: 100ms;">
+                    <div class="w-16 h-16 bg-white shadow-sm border border-gray-100 text-brand rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-br group-hover:from-brand group-hover:to-brand2 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-dark mb-3">Galeri & Perjalanan Cinta</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed font-medium">Tampilkan momen pre-wedding terbaik dan ceritakan indahnya kisah perjalanan cinta Anda secara berkelas.</p>
+                </div>
+                <!-- Fitur 6 -->
+                <div class="hover-card bg-soft p-8 rounded-[2rem] border border-gray-100 reveal-up group" style="transition-delay: 200ms;">
+                    <div class="w-16 h-16 bg-white shadow-sm border border-gray-100 text-brand rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-gradient-to-br group-hover:from-brand group-hover:to-brand2 group-hover:text-white transition-colors duration-300">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="font-bold text-xl text-dark mb-3">Super Cepat & Responsif</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed font-medium">Kode dioptimalkan khusus agar sangat ringan, tanpa *loading* lama, dan tampak sempurna di semua ukuran layar HP.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. KATALOG TEMA -->
+    <section id="katalog" class="py-24 bg-dark text-white relative overflow-hidden">
+        <!-- Dekorasi Latar Gelap -->
+        <div class="absolute top-0 right-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        <div class="absolute -left-40 top-40 w-96 h-96 bg-brand/20 rounded-full blur-[120px]"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal-up">
+                <div class="max-w-2xl">
+                    <span class="text-brandLight font-bold tracking-widest text-sm uppercase mb-3 block text-brand2">Pilih Gaya Anda</span>
+                    <h2 class="font-sans text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">Katalog <span class="text-gradient">Tema Mewah</span></h2>
+                    <p class="text-gray-400 text-lg">Kami merancang 5 gaya desain eksklusif. Anda bebas memilih tema warna, font, dan animasi yang paling menggambarkan kepribadian Anda.</p>
+                </div>
+            </div>
+
+            <!-- Grid Katalog -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <div class="w-64 h-80 mx-auto rounded-t-full border-4 border-white shadow-xl overflow-hidden mb-12 reveal-up">
-                    <img id="hero-photo" src="" class="w-full h-full object-cover">
-                </div>
-
-                <div class="flex flex-col md:flex-row gap-8 justify-center items-center">
-                    <div class="reveal-up">
-                        <h3 id="nama-lengkap-pria" class="font-head text-2xl font-bold text-dark">Pria</h3>
-                        <p id="ortu-pria" class="font-body text-sm text-gold">Putra Bpk & Ibu</p>
+                <!-- Tema 1: Classic -->
+                <div class="bg-darker rounded-[2rem] overflow-hidden group reveal-up border border-white/5 hover:border-brand/50 transition-all duration-500 shadow-xl hover:shadow-[0_10px_40px_rgba(255,65,108,0.15)]">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Classic Theme" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker via-darker/60 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-[#C5A059] border-2 border-white shadow-md"></div>
+                            <h3 class="font-serif text-2xl font-bold text-white">Classic Gold</h3>
+                        </div>
                     </div>
-                    <div class="font-title text-5xl text-gold reveal-up">&amp;</div>
-                    <div class="reveal-up">
-                        <h3 id="nama-lengkap-wanita" class="font-head text-2xl font-bold text-dark">Wanita</h3>
-                        <p id="ortu-wanita" class="font-body text-sm text-gold">Putri Bpk & Ibu</p>
+                    <div class="p-8 pt-4">
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Nuansa elegan warna cream dan emas mahal, dengan animasi daun sakura berjatuhan. Pilihan favorit sepanjang masa.</p>
+                        <a href="#cara-pesan" class="block w-full text-center py-3.5 bg-white/5 hover:bg-white/10 text-brand2 rounded-xl transition-colors font-bold text-sm border border-white/10">
+                            Pilih Tema Ini
+                        </a>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- ACARA -->
-        <section id="acara" class="py-20 bg-white">
-            <div class="container mx-auto px-6 text-center max-w-2xl reveal-up">
-                <h2 class="font-title text-5xl text-dark mb-10">Detail Acara</h2>
-                <div class="glass-card p-8 rounded-3xl border-t-4 border-gold shadow-md mb-8">
-                    <h3 class="font-head text-2xl mb-4">Akad Nikah</h3>
-                    <p id="event-date-akad" class="font-bold font-body">Tanggal</p>
-                    <p id="event-time-akad" class="text-gray-600 mb-4">Waktu</p>
-                    <p id="event-location-akad" class="font-bold text-dark">Lokasi</p>
+                <!-- Tema 2: Rustic -->
+                <div class="bg-darker rounded-[2rem] overflow-hidden group reveal-up border border-white/5 hover:border-brand/50 transition-all duration-500 shadow-xl hover:shadow-[0_10px_40px_rgba(255,65,108,0.15)]" style="transition-delay: 100ms;">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Rustic Theme" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker via-darker/60 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-[#8A9A5B] border-2 border-white shadow-md"></div>
+                            <h3 class="font-serif text-2xl font-bold text-white">Rustic Nature</h3>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-4">
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Warna hijau bumi dan krem dengan font organik yang indah. Sangat cocok untuk pernikahan bertema alam atau *outdoor*.</p>
+                        <a href="#cara-pesan" class="block w-full text-center py-3.5 bg-white/5 hover:bg-white/10 text-brand2 rounded-xl transition-colors font-bold text-sm border border-white/10">
+                            Pilih Tema Ini
+                        </a>
+                    </div>
                 </div>
-                <div class="glass-card p-8 rounded-3xl border-t-4 border-gold shadow-md">
-                    <h3 class="font-head text-2xl mb-4">Resepsi</h3>
-                    <p id="event-date" class="font-bold font-body">Tanggal</p>
-                    <p id="event-time" class="text-gray-600 mb-4">Waktu</p>
-                    <p id="event-location" class="font-bold text-dark mb-6">Lokasi</p>
-                    <a id="btn-map" href="#" class="px-6 py-3 bg-gold text-white rounded-full font-bold shadow-lg">Buka Peta</a>
+
+                <!-- Tema 3: Modern -->
+                <div class="bg-darker rounded-[2rem] overflow-hidden group reveal-up border border-white/5 hover:border-brand/50 transition-all duration-500 shadow-xl hover:shadow-[0_10px_40px_rgba(255,65,108,0.15)]" style="transition-delay: 200ms;">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Modern Theme" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 grayscale">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker via-darker/60 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-[#111111] border-2 border-white shadow-md"></div>
+                            <h3 class="font-serif text-2xl font-bold text-white">Modern Minimalist</h3>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-4">
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Desain monokrom (hitam-putih) yang sangat bersih, tegas, dan berkelas. Dilengkapi animasi kilauan bintang elegan.</p>
+                        <a href="#cara-pesan" class="block w-full text-center py-3.5 bg-white/5 hover:bg-white/10 text-brand2 rounded-xl transition-colors font-bold text-sm border border-white/10">
+                            Pilih Tema Ini
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tema 4: Romantic -->
+                <div class="bg-darker rounded-[2rem] overflow-hidden group reveal-up border border-white/5 hover:border-brand/50 transition-all duration-500 shadow-xl hover:shadow-[0_10px_40px_rgba(255,65,108,0.15)]">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Romantic Theme" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker via-darker/60 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-[#B76E79] border-2 border-white shadow-md"></div>
+                            <h3 class="font-serif text-2xl font-bold text-white">Romantic Pink</h3>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-4">
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Paduan warna *Rose Gold* dan *Soft Pink* yang melambangkan kelembutan. Dihiasi animasi bentuk hati berjatuhan.</p>
+                        <a href="#cara-pesan" class="block w-full text-center py-3.5 bg-white/5 hover:bg-white/10 text-brand2 rounded-xl transition-colors font-bold text-sm border border-white/10">
+                            Pilih Tema Ini
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tema 5: Ocean -->
+                <div class="bg-darker rounded-[2rem] overflow-hidden group reveal-up border border-white/5 hover:border-brand/50 transition-all duration-500 shadow-xl hover:shadow-[0_10px_40px_rgba(255,65,108,0.15)]" style="transition-delay: 100ms;">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Ocean Theme" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker via-darker/60 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 right-6 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-[#1E3F66] border-2 border-white shadow-md"></div>
+                            <h3 class="font-serif text-2xl font-bold text-white">Ocean Blue</h3>
+                        </div>
+                    </div>
+                    <div class="p-8 pt-4">
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Kombinasi eksklusif Biru Navy dan Biru Muda. Memberikan kesan menenangkan dengan animasi gelembung udara tipis.</p>
+                        <a href="#cara-pesan" class="block w-full text-center py-3.5 bg-white/5 hover:bg-white/10 text-brand2 rounded-xl transition-colors font-bold text-sm border border-white/10">
+                            Pilih Tema Ini
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. HARGA & PAKET -->
+    <section id="harga" class="py-24 bg-soft">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal-up">
+                <h2 class="font-sans text-4xl md:text-5xl font-extrabold text-dark mb-4 tracking-tight">Investasi <span class="text-gradient">Sangat Terjangkau</span></h2>
+                <p class="text-gray-500 text-lg">Dapatkan fitur undangan digital setara layanan jutaan rupiah dengan harga promo super spesial bulan ini.</p>
+            </div>
+
+            <div class="max-w-lg mx-auto bg-white rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] overflow-hidden border border-gray-100 reveal-up hover:-translate-y-2 transition-transform duration-500 relative">
+                <!-- Highlight Glow -->
+                <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-brand to-brand2"></div>
+                
+                <div class="bg-dark p-10 text-center relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl shadow-md">PROMO TERBATAS</div>
+                    <h3 class="font-sans font-extrabold text-3xl text-white mb-2">Paket <span class="text-gradient">Sultan</span></h3>
+                    <p class="text-gray-400 text-sm mb-6 font-medium">All-In-One. Semua fitur premium terbuka bebas hambatan.</p>
+                    
+                    <div class="flex items-center justify-center gap-2 mb-1">
+                        <span class="text-gray-500 line-through text-lg font-bold">Rp 500.000</span>
+                    </div>
+                    <div class="flex items-end justify-center gap-1 text-white">
+                        <span class="text-3xl font-bold mb-2">Rp</span>
+                        <span class="text-7xl font-black tracking-tighter">149<span class="text-4xl text-brand2">.000</span></span>
+                    </div>
+                </div>
+                
+                <div class="p-10">
+                    <ul class="space-y-5 mb-10 font-medium text-gray-700">
+                        <li class="flex items-center gap-4"><i class="fas fa-check-circle text-brand text-xl"></i> Bebas Pilih 5 Tema Mewah</li>
+                        <li class="flex items-center gap-4"><i class="fas fa-check-circle text-brand text-xl"></i> Bebas Ganti Warna Custom</li>
+                        <li class="flex items-center gap-4"><i class="fas fa-check-circle text-brand text-xl"></i> Musik Latar (Lagu Bebas YouTube)</li>
+                        <li class="flex items-center gap-4"><i class="fas fa-check-circle text-brand text-xl"></i> Galeri Foto Ekstra (Hingga 6 Foto)</li>
+                        <li class="flex items-center gap-4"><i class="fas fa-check-circle text-brand text-xl"></i> Fitur RSVP ke WhatsApp Pribadi</li>
+                        <li class="flex items-center gap-4"><i class="fas fa-check-circle text-brand text-xl"></i> Fitur Amplop Digital / Transfer</li>
+                        <li class="flex items-center gap-4"><i class="fas fa-check-circle text-brand text-xl"></i> Generator Nama Tamu Tanpa Batas</li>
+                        <li class="flex items-center gap-4"><i class="fas fa-check-circle text-brand text-xl"></i> Aktif Selamanya! (Life-time)</li>
+                    </ul>
+                    
+                    <a href="#cara-pesan" class="block w-full py-4 btn-gradient text-center rounded-2xl font-extrabold text-lg">
+                        Pesan Paket Ini Sekarang
+                    </a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- GALERI (Hanya Muncul Jika Ada Foto) -->
-        <section id="galeri" class="py-20 bg-soft hidden">
-            <div class="container mx-auto px-6 max-w-4xl">
-                <h2 class="font-title text-5xl text-dark text-center mb-10 reveal-up">Momen Bahagia</h2>
-                <div class="gallery-grid" id="gallery-container"></div>
-            </div>
-        </section>
+    <!-- 6. CARA PESAN & CTA -->
+    <section id="cara-pesan" class="py-24 bg-white relative">
+        <div class="container mx-auto px-6">
+            <div class="bg-dark rounded-[3rem] p-10 md:p-16 relative overflow-hidden reveal-up shadow-2xl">
+                <!-- Decorative Modern Blobs -->
+                <div class="absolute -top-32 -right-32 w-80 h-80 bg-brand/20 rounded-full blur-[80px]"></div>
+                <div class="absolute -bottom-32 -left-32 w-80 h-80 bg-brand2/20 rounded-full blur-[80px]"></div>
+                
+                <div class="relative z-10 text-center text-white max-w-3xl mx-auto">
+                    <h2 class="font-sans text-4xl md:text-5xl font-extrabold mb-6 tracking-tight">Langkah Mudah Memesan</h2>
+                    <p class="text-gray-400 mb-14 text-lg font-medium">Hanya butuh 3 langkah sederhana, undangan digital *modern* Anda siap disebarkan ke keluarga dan kerabat tercinta.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-14">
+                        <!-- Step 1 -->
+                        <div class="bg-white/5 p-8 rounded-[2rem] border border-white/10 relative backdrop-blur-sm">
+                            <div class="w-14 h-14 btn-gradient rounded-full flex items-center justify-center font-bold text-2xl absolute -top-7 left-1/2 transform -translate-x-1/2 shadow-lg">1</div>
+                            <h4 class="font-bold text-xl text-white mb-3 mt-4">Isi Formulir Data</h4>
+                            <p class="text-sm text-gray-400 font-medium">Kami akan mengirimkan link Google Form untuk Anda mengisi data acara, nama, dan foto.</p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="bg-white/5 p-8 rounded-[2rem] border border-white/10 relative backdrop-blur-sm">
+                            <div class="w-14 h-14 btn-gradient rounded-full flex items-center justify-center font-bold text-2xl absolute -top-7 left-1/2 transform -translate-x-1/2 shadow-lg">2</div>
+                            <h4 class="font-bold text-xl text-white mb-3 mt-4">Pembayaran</h4>
+                            <p class="text-sm text-gray-400 font-medium">Lakukan pembayaran ke rekening admin sesuai dengan paket promo harga coret di atas.</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="bg-white/5 p-8 rounded-[2rem] border border-white/10 relative backdrop-blur-sm">
+                            <div class="w-14 h-14 btn-gradient rounded-full flex items-center justify-center font-bold text-2xl absolute -top-7 left-1/2 transform -translate-x-1/2 shadow-lg">3</div>
+                            <h4 class="font-bold text-xl text-white mb-3 mt-4">Undangan Selesai!</h4>
+                            <p class="text-sm text-gray-400 font-medium">Undangan Anda langsung aktif dan siap dibagikan. Anda akan mendapatkan link khusus Anda.</p>
+                        </div>
+                    </div>
 
-        <!-- HADIAH / REKENING -->
-        <section class="py-20 bg-white text-center">
-            <div class="container mx-auto px-6 max-w-md reveal-up">
-                <h2 class="font-title text-5xl text-dark mb-6">Wedding Gift</h2>
-                <div class="glass-card p-8 rounded-3xl bg-soft shadow-lg">
-                    <p class="font-head text-2xl font-bold text-gold mb-2" id="rek-number">Nomor Rekening</p>
-                    <p class="font-body font-bold text-dark mb-6" id="rek-name">Nama Pemilik</p>
-                    <button class="px-6 py-2 bg-gold text-white rounded-full text-sm font-bold">Copy Rekening</button>
+                    <!-- TOMBOL CTA UTAMA -->
+                    <a href="https://forms.gle/ContohLinkGoogleFormAnda" target="_blank" class="inline-flex items-center gap-3 px-10 py-5 bg-white text-dark rounded-full font-extrabold text-lg hover:scale-105 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.2)]">
+                        <i class="fab fa-wpforms text-brand text-2xl"></i> Klik Disini Mengisi Form Data
+                    </a>
+                    <p class="mt-6 text-sm text-gray-400 font-medium">Atau hubungi kami via WhatsApp di pojok kanan bawah jika ada pertanyaan.</p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- RSVP -->
-        <section id="rsvp" class="py-20 bg-soft text-center">
-            <div class="container mx-auto px-6 max-w-md reveal-up">
-                <h2 class="font-title text-5xl text-dark mb-8">RSVP & Ucapan</h2>
-                <form id="rsvp-form" class="glass-card p-6 rounded-2xl bg-white space-y-4">
-                    <input type="text" id="rsvp-nama" placeholder="Nama Anda" class="w-full p-3 border rounded-lg bg-soft" required>
-                    <select id="rsvp-hadir" class="w-full p-3 border rounded-lg bg-soft"><option>Hadir</option><option>Tidak Hadir</option></select>
-                    <textarea id="rsvp-pesan" placeholder="Ucapan Anda" class="w-full p-3 border rounded-lg bg-soft" required></textarea>
-                    <button type="submit" class="w-full p-3 bg-green-500 text-white font-bold rounded-lg"><i class="fab fa-whatsapp"></i> Kirim ke WhatsApp</button>
-                </form>
+    <!-- 7. FOOTER -->
+    <footer class="bg-darker pt-20 pb-10 border-t border-white/5 text-center md:text-left">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                <div>
+                    <a href="#" class="text-3xl font-sans font-extrabold tracking-tight text-white flex items-center justify-center md:justify-start gap-2 mb-6">
+                        <i class="fas fa-heart text-brand text-2xl"></i> kuade<span class="text-gradient">.com</span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto md:mx-0 font-medium">Solusi pembuatan undangan pernikahan digital cerdas, cepat, modern, dan sangat elegan untuk momen tak terlupakan dalam hidup Anda.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-lg">Navigasi Cepat</h4>
+                    <ul class="space-y-3 text-gray-500 text-sm font-medium">
+                        <li><a href="#beranda" class="hover:text-brand transition-colors">Beranda Utama</a></li>
+                        <li><a href="#fitur" class="hover:text-brand transition-colors">Fitur Premium</a></li>
+                        <li><a href="#katalog" class="hover:text-brand transition-colors">Katalog Tema</a></li>
+                        <li><a href="#harga" class="hover:text-brand transition-colors">Harga Promo</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-6 text-lg">Hubungi Kami</h4>
+                    <ul class="space-y-4 text-gray-500 text-sm font-medium">
+                        <!-- TODO: Ganti Nomor WA Abang di sini -->
+                        <li class="flex items-center justify-center md:justify-start gap-3"><div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-brand"><i class="fab fa-whatsapp"></i></div> +62 812-3456-7890</li>
+                        <li class="flex items-center justify-center md:justify-start gap-3"><div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-brand"><i class="far fa-envelope"></i></div> admin@kuade.com</li>
+                        <li class="flex items-center justify-center md:justify-start gap-3"><div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-brand"><i class="fas fa-map-marker-alt"></i></div> Indonesia</li>
+                    </ul>
+                </div>
             </div>
-        </section>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm font-medium text-gray-600">
+                <p>&copy; 2026 kuade.com. All rights reserved.</p>
+                <div class="flex gap-4 mt-6 md:mt-0 text-xl">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand hover:text-white transition-all"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand hover:text-white transition-all"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-brand hover:text-white transition-all"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-        <!-- FOOTER -->
-        <footer class="py-10 bg-dark text-center text-white">
-            <p class="font-title text-4xl text-gold mb-4" id="footer-names">Mempelai</p>
-            <p class="text-xs text-gray-400">Dibuat menggunakan <a href="index.html" class="text-gold font-bold">kuade.com</a></p>
-        </footer>
-    </main>
+    <!-- FLOATING WHATSAPP BUTTON -->
+    <!-- TODO: Ganti nomor WA Abang (Gunakan kode negara 62) -->
+    <a href="https://wa.me/6281234567890?text=Halo%20Admin%20kuade.com,%20saya%20tertarik%20ingin%20membuat%20undangan%20digital." target="_blank" class="fixed bottom-6 right-6 z-[200] bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center text-3xl shadow-[0_10px_20px_rgba(37,211,102,0.3)] hover:scale-110 transition-transform wa-bounce">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
+    <!-- JAVASCRIPT ANIMATIONS -->
     <script>
-        // 1. Parameter URL & Konfigurasi API
-        const urlParams = new URLSearchParams(window.location.search);
-        const clientId = urlParams.get('id');
-        const tamuUndangan = urlParams.get('to') || 'Bapak/Ibu/Saudara/i';
-        const SHEETDB_API_URL = 'https://sheetdb.io/api/v1/gqsl1mcjjkx7t';
-        
-        document.getElementById('nama-tamu').innerText = tamuUndangan;
-        
-        let targetCountDownDate = null; let ytPlayer = null; let isUsingYoutube = false; let currentParticleClass = 'fa-leaf'; let waAdminNumber = '';
-
-        const THEMES = {
-            'classic': { primary: '#C5A059', bg: '#FAF7F2', titleFont: '"Great Vibes", cursive', bodyFont: '"Lato", sans-serif', headFont: '"Playfair Display", serif', particle: 'fa-leaf' },
-            'rustic': { primary: '#556B2F', bg: '#F5F5DC', titleFont: '"Dancing Script", cursive', bodyFont: '"Montserrat", sans-serif', headFont: '"Lora", serif', particle: 'fa-seedling' },
-            'modern': { primary: '#111111', bg: '#FFFFFF', titleFont: '"Cinzel", serif', bodyFont: '"Montserrat", sans-serif', headFont: '"Cinzel", serif', particle: 'fa-star' },
-            'romantic': { primary: '#B76E79', bg: '#FFF0F5', titleFont: '"Great Vibes", cursive', bodyFont: '"Lato", sans-serif', headFont: '"Playfair Display", serif', particle: 'fa-heart' },
-            'ocean': { primary: '#1E3F66', bg: '#F0F8FF', titleFont: '"Great Vibes", cursive', bodyFont: '"Lato", sans-serif', headFont: '"Cinzel", serif', particle: 'fa-circle' }
-        };
-
-        function getDirectImageUrl(url) {
-            if (!url) return '';
-            const driveMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
-            if (driveMatch && driveMatch[1]) return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
-            return url;
+        // 1. Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         }
 
-        function getYoutubeId(url) {
-            if (!url) return null;
-            const match = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);
-            return (match && match[2].length === 11) ? match[2] : null;
-        }
-
-        // 2. Fetch Data & Cek Status Bayar
-        async function fetchUndanganData() {
-            if (!clientId) {
-                tampilkanError("Tautan Tidak Valid", true); return;
-            }
-            try {
-                const response = await fetch(`${SHEETDB_API_URL}/search?id_pelanggan=${clientId}`);
-                const data = await response.json();
-                
-                if (data && data.length > 0) {
-                    const client = data[0];
-                    const status = client.status_bayar ? client.status_bayar.toUpperCase().trim() : '';
-
-                    if (status === 'LUNAS') {
-                        terapkanDataKeDesain(client);
-                    } else {
-                        tampilkanError(`Halo, <b>${client.namaPria || 'Klien'} & ${client.namaWanita || 'Klien'}</b><br>Tautan Ini Belum Aktif`, false);
-                        document.getElementById('lock-actions').classList.remove('hidden');
-                        document.getElementById('loading-spinner').classList.add('hidden');
-                    }
-                } else {
-                    tampilkanError("ID Undangan Tidak Ditemukan", true);
-                }
-            } catch (error) {
-                tampilkanError("Terjadi Gangguan Sistem", true);
-            }
-        }
-
-        function tampilkanError(pesan, hideSpinner) {
-            if(hideSpinner) document.getElementById('loading-spinner').style.display = 'none';
-            document.getElementById('loading-text').innerHTML = pesan;
-            document.getElementById('loading-text').classList.remove('animate-pulse');
-            document.getElementById('loading-text').classList.add('text-red-500');
-        }
-
-        // 3. Terapkan Desain
-        function terapkanDataKeDesain(data) {
-            const themeKey = data.namaTema ? data.namaTema.toLowerCase().trim() : 'classic';
-            const selTheme = THEMES[themeKey] || THEMES['classic'];
-            document.getElementById('dynamic-theme').innerHTML = `:root { --color-primary: ${data.temaWarna || selTheme.primary}; --color-bg: ${data.temaBg || selTheme.bg}; --font-head: ${selTheme.headFont}; --font-title: ${selTheme.titleFont}; --font-body: ${selTheme.bodyFont}; }`;
-            currentParticleClass = selTheme.particle;
-
-            const namaPanggilan = `${data.namaPria || 'Pria'} & ${data.namaWanita || 'Wanita'}`;
-            document.getElementById('page-title').innerText = namaPanggilan;
-            document.getElementById('cover-names').innerText = namaPanggilan;
-            document.getElementById('footer-names').innerText = namaPanggilan;
-            
-            if(data.salam_pembuka) document.getElementById('salam-pembuka').innerText = data.salam_pembuka;
-            if(data.ayat_kutipan) document.getElementById('ayat-kutipan').innerText = data.ayat_kutipan;
-            
-            document.getElementById('nama-lengkap-pria').innerText = data.namaLengkapPria || data.namaPria || '-';
-            document.getElementById('ortu-pria').innerText = data.ortuPria || '-';
-            document.getElementById('nama-lengkap-wanita').innerText = data.namaLengkapWanita || data.namaWanita || '-';
-            document.getElementById('ortu-wanita').innerText = data.ortuWanita || '-';
-
-            document.getElementById('cover-date').innerText = data.tanggal || '-';
-            document.getElementById('event-date-akad').innerText = data.tanggal_akad || data.tanggal || '-';
-            document.getElementById('event-time-akad').innerText = data.waktu_akad || '-';
-            document.getElementById('event-location-akad').innerText = data.lokasi_akad || data.lokasi || '-';
-            
-            document.getElementById('event-date').innerText = data.tanggal_resepsi || data.tanggal || '-';
-            document.getElementById('event-time').innerText = data.waktu_resepsi || '-';
-            document.getElementById('event-location').innerText = data.lokasi_resepsi || data.lokasi || '-';
-
-            if (data.fotoUrl) document.getElementById('hero-photo').src = getDirectImageUrl(data.fotoUrl);
-            
-            if (data.musikUrl) {
-                const ytId = getYoutubeId(data.musikUrl);
-                if (ytId) {
-                    isUsingYoutube = true;
-                    const tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
-                    const firstScriptTag = document.getElementsByTagName('script')[0];
-                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-                    window.onYouTubeIframeAPIReady = function() {
-                        ytPlayer = new YT.Player('yt-player-container', { height: '0', width: '0', videoId: ytId, playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': ytId } });
-                    };
-                } else {
-                    document.getElementById('audio-source').src = data.musikUrl;
-                    document.getElementById('bg-music').load();
-                }
-            }
-
-            const galeriURLs = [data.galeri1, data.galeri2, data.galeri3, data.galeri4, data.galeri5, data.galeri6].filter(url => url);
-            if(galeriURLs.length > 0) {
-                document.getElementById('galeri').classList.remove('hidden');
-                document.getElementById('nav-galeri').classList.remove('hidden');
-                galeriURLs.forEach((url) => {
-                    document.getElementById('gallery-container').innerHTML += `<div class="h-48 rounded-xl overflow-hidden shadow-md reveal-up"><img src="${getDirectImageUrl(url)}" class="w-full h-full object-cover"></div>`;
-                });
-            }
-
-            if(data.linkMap) document.getElementById('btn-map').href = data.linkMap;
-            if(data.noWaMempelai) waAdminNumber = data.noWaMempelai;
-            if(data.rekNomor) document.getElementById('rek-number').innerText = data.rekNomor;
-            if(data.rekNama) document.getElementById('rek-name').innerText = data.rekNama;
-
-            document.getElementById('loading-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('loading-screen').style.display = 'none';
-                document.getElementById('btn-buka-undangan').classList.remove('hidden');
-            }, 500);
-        }
-
-        fetchUndanganData();
-
-        // 4. Player Logika
-        const btnAudio = document.getElementById('music-btn');
-        const bgMusic = document.getElementById('bg-music');
-        let isPlaying = false;
-
-        function openInvitation() {
-            document.getElementById('opening-cover').classList.add('cover-opened');
-            document.body.classList.remove('overflow-hidden');
-            setTimeout(() => { document.getElementById('bottom-nav').classList.add('nav-visible'); }, 1000);
-
-            if(isUsingYoutube && ytPlayer) { ytPlayer.playVideo(); isPlaying = true; } 
-            else { bgMusic.play(); isPlaying = true; }
-
-            initParticles();
-            const obs = new IntersectionObserver((e, o) => e.forEach(en => { if(en.isIntersecting){ en.target.classList.add('reveal-active'); o.unobserve(en.target); }}));
-            document.querySelectorAll('.reveal-up').forEach(el => obs.observe(el));
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        btnAudio.addEventListener('click', () => {
-            if (isPlaying) {
-                if(isUsingYoutube && ytPlayer) ytPlayer.pauseVideo(); else bgMusic.pause();
-                btnAudio.classList.remove('animate-pulse');
+        // 2. Sticky Navbar Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.classList.replace('py-4', 'py-2');
             } else {
-                if(isUsingYoutube && ytPlayer) ytPlayer.playVideo(); else bgMusic.play();
-                btnAudio.classList.add('animate-pulse');
+                navbar.classList.remove('shadow-lg');
+                navbar.classList.replace('py-2', 'py-4');
             }
-            isPlaying = !isPlaying;
         });
 
-        document.getElementById('rsvp-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            if(!waAdminNumber) { alert("Nomor WA penerima belum diatur oleh admin."); return; }
-            const teksWA = `Halo, saya *${document.getElementById('rsvp-nama').value}*.%0AStatus: *${document.getElementById('rsvp-hadir').value}*.%0A%0A"${document.getElementById('rsvp-pesan').value}"`;
-            window.open(`https://wa.me/${waAdminNumber}?text=${teksWA}`, '_blank');
-        });
+        // 3. Scroll Reveal Animation (Intersection Observer)
+        document.addEventListener("DOMContentLoaded", function() {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('reveal-active');
+                        obs.unobserve(entry.target); 
+                    }
+                });
+            }, { threshold: 0.1 });
 
-        function initParticles() {
-            setInterval(() => {
-                if(document.getElementById('sakura-container').childElementCount < 15) {
-                    const petal = document.createElement('i');
-                    petal.className = `fas ${currentParticleClass} sakura-petal text-gold/40 text-sm`;
-                    petal.style.left = `${Math.random() * 100}vw`;
-                    petal.style.setProperty('--drift', (Math.random() - 0.5));
-                    petal.style.animationDuration = `${Math.random() * 5 + 8}s`;
-                    document.getElementById('sakura-container').appendChild(petal);
-                    setTimeout(() => petal.remove(), 13000);
-                }
-            }, 1000);
-        }
+            const revealElements = document.querySelectorAll('.reveal-up');
+            revealElements.forEach(el => observer.observe(el));
+        });
     </script>
 </body>
 </html>
